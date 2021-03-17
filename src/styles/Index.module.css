@@ -1,0 +1,33 @@
+.container {
+   width: 100vw;
+   height: 100vh;
+
+   background: var(--blue);
+
+   display: flex;
+}
+
+.container section {
+   display: flex;
+   flex-direction: column;
+   justify-content: center;
+}
+
+.container section p {
+   font-size: 2.875rem;
+   font-weight: 600;
+   color: var(--white);
+}
+
+.container section div{
+   width: 19.875rem;
+   display: flex;
+   align-items: center;
+}
+
+.container section div span {
+   font-size: 1.25rem;
+   font-weight: 500;
+   color: #B2B9FF;
+   margin-left: 1.5rem;
+}
