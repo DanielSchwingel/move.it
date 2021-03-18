@@ -1,14 +1,12 @@
-import { signIn } from 'next-auth/client'
+import { useContext } from 'react';
+import { AuthenticationContext } from '../contexts/AuthenticationContext';
 import { FiArrowRight } from 'react-icons/fi';
 import Head from 'next/head';
 
 import styles from '../styles/Index.module.css';
 
 export default function Index() {
-
-	async function handleLogin() {
-		signIn('github', { callbackUrl: 'http://localhost:3000/home' });
-	}
+	const { logIn } = useContext(AuthenticationContext);
 
 	return (
 		<div className={styles.container}>
@@ -24,11 +22,8 @@ export default function Index() {
 					<span>Faça login com seu Github para começar</span>
 				</div>
 				<div>
-					<input 
-						type='text'
-						placeholder='Digite seu username'
-					/>
-					<button type='button' onClick={handleLogin}>
+					<button type='button' onClick={logIn}>
+						Entrar com GitHub
 						<FiArrowRight size={24} color='#FFFFFF' />
 					</button>
 				</div>

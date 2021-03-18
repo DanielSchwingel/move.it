@@ -1,6 +1,8 @@
+import { useEffect, useContext } from 'react';
 import Head from 'next/head';
 import { getSession } from 'next-auth/client';
 import { GetServerSideProps } from 'next';
+import axios from 'axios';
 
 import { ChallengeBox } from '../components/ChallengeBox';
 import { CompletedChallenges } from '../components/CompletedChallenges';
@@ -9,6 +11,7 @@ import { ExperienceBar } from '../components/ExperienceBar';
 import { Profile } from '../components/Profile';
 import { CountdownProvider } from '../contexts/CountdownContext';
 import { ChallengesProvider } from '../contexts/ChallengesContext';
+import { AuthenticationContext } from '../contexts/AuthenticationContext';
 import { Sidebar } from '../components/Sidebar';
 
 import { iHomeProps } from '../interfaces/pages/Home';
@@ -16,19 +19,24 @@ import { iHomeProps } from '../interfaces/pages/Home';
 import styles from '../styles/Home.module.css';
 
 export default function Home(props: iHomeProps) {
+	const { user } = useContext(AuthenticationContext);
+	useEffect(()=> {
+		axios.post('/api/insertUser', {name: user.name, email: user.email, image: user.image})
+			.then(response=>console.log(response.data))
+	},[]);
+
 	return (
 		<ChallengesProvider 
 			level={props.level} 
 			currentExperience={props.currentExperience} 
 			challengeCompleted={props.challengeCompleted}
-			user={props.user}
 		>
 			<div className={styles.container}>
+				<Head>
+					<title>Início | move.it </title>
+				</Head>	
 				<Sidebar/>
 				<div className={styles.content}>
-					<Head>
-						<title>Início | move.it </title>
-					</Head>	
 					<ExperienceBar/>
 					<CountdownProvider>
 						<section>
@@ -62,7 +70,6 @@ export const getServerSideProps:GetServerSideProps  = async (ctx)=> {
 	}
 	return {
 		props: {
-			user: session.user,
 			level: Number(level),
 			currentExperience: Number(currentExperience),
 			challengeCompleted: Number(challengeCompleted)

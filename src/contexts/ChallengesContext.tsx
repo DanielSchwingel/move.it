@@ -4,7 +4,6 @@ import Cookies  from 'js-cookie';
 import { LevelUpModal } from '../components/LevelUpModal';
 
 import { iChallengesContextData, iChallengesProviderProps} from '../interfaces/contexts/Challenges';
-import { iUserAuthenticated } from '../interfaces/others/Authentication';
 
 import challenges from '../../challenges.json';
 
@@ -18,12 +17,6 @@ export function ChallengesProvider({children, ...rest}: iChallengesProviderProps
    const [ isLevelUpModalOpen, setIsLevelUpModalOpen ] = useState(false);
 
    const experienceToNextLevel = Math.pow((level + 1) * 4, 2);
-
-   const user: iUserAuthenticated = {
-      email: rest.user.email,
-      name: rest.user.name,
-      image: rest.user.image
-   }
 
    useEffect(()=>{
       Notification.requestPermission();
@@ -92,8 +85,7 @@ export function ChallengesProvider({children, ...rest}: iChallengesProviderProps
             resetChallenge,
             experienceToNextLevel,
             completeChallenge,
-            closeLevelUpModal,
-            user
+            closeLevelUpModal
          }}
       >
          {children}

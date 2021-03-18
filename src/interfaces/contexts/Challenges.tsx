@@ -1,5 +1,4 @@
 import { ReactNode } from 'react';
-import { iUserAuthenticated } from '../others/Authentication';
 
 interface iChallenge {
    type: 'body' | 'eye';
@@ -18,7 +17,6 @@ interface iChallengesContextData {
    experienceToNextLevel: number;
    completeChallenge: ()=> void;
    closeLevelUpModal: ()=> void;
-   user?: iUserAuthenticated;
 }
 
 interface iChallengesProviderProps {
@@ -26,7 +24,6 @@ interface iChallengesProviderProps {
    level?: number;
 	currentExperience?: number;
 	challengeCompleted?: number;
-   user?: iUserAuthenticated;
 }
 
 export type { iChallenge, iChallengesContextData, iChallengesProviderProps };

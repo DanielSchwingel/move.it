@@ -36,30 +36,25 @@
    margin-left: 1.5rem;
 }
 
-.container section div input {
-   height: 4rem;
-
-   background: linear-gradient(90deg, #4953B8 0%, rgba(73, 83, 184, 0.2) 100%);
-   border: none;
-   color: var(--white);
-   padding: 1rem;
-
-   outline: none;
-}
-
-.container section div input::-webkit-input-placeholder {
-   color: #B2B9FF;
-}
-
 .container section div button {
    height: 4rem;
-   width: 4rem;
+   width: 100%;
 
    background: var(--blue-dark);
    border: none;
    outline: none;
+   font-weight: 500;
+   color: #FFFFFF;
+
+   display: flex;
+   align-items: center;
+   justify-content: center;
 
    transition: background 0.2s;
+}
+
+.container section div button svg {
+   margin-left: 1.5rem;
 }
 
 .container section div button:hover {

@@ -1,17 +1,13 @@
+import { useContext } from 'react';
 import Link from 'next/link';
-import { useRouter } from 'next/router';
-import { signOut } from 'next-auth/client';
+import { AuthenticationContext } from '../contexts/AuthenticationContext';
 import { FiHome, FiAward, FiPower } from 'react-icons/fi';
 
 import styles from '../styles/components/Sidebar.module.css';
 
 export function Sidebar() {
-   const router = useRouter();
+   const { logOut } = useContext(AuthenticationContext);
 
-   function handleLogout() {
-      signOut();
-      router.push('/home');
-   }
    return (
       <aside className={styles.container}>
          <header>
@@ -19,14 +15,18 @@ export function Sidebar() {
          </header>
          <main>
             <Link href='/home'>
+               <a>
                <FiHome size={24} color='#666666'/>
+               </a>
             </Link>
             <Link href='/ranking'>
+               <a>
                <FiAward size={24} color='#666666'/>
+               </a>
             </Link>
          </main>
          <footer>
-            <FiPower size={24} color='#666666' onClick={handleLogout}/>
+            <FiPower size={24} color='#666666' onClick={logOut}/>
          </footer>
       </aside>
    )
