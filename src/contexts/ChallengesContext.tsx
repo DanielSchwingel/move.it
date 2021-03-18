@@ -1,38 +1,16 @@
-import { createContext, ReactNode, useEffect, useState } from 'react';
+import { createContext, useEffect, useState } from 'react';
 import Cookies  from 'js-cookie';
+
 import { LevelUpModal } from '../components/LevelUpModal';
+
+import { iChallengesContextData, iChallengesProviderProps} from '../interfaces/contexts/Challenges';
+import { iUserAuthenticated } from '../interfaces/others/Authentication';
 
 import challenges from '../../challenges.json';
 
-interface Challenge {
-   type: 'body' | 'eye';
-   description: string;
-   amount: number;
-}
+export const ChallengesContext = createContext({} as iChallengesContextData);
 
-interface ChallengesContextData {
-   level: number;
-   levelUp: ()=> void;
-   currentExperience: number;
-   challengeCompleted: number;
-   startNewChallenge: ()=> void;
-   activeChallenge: Challenge;
-   resetChallenge: ()=> void;
-   experienceToNextLevel: number;
-   completeChallenge: ()=> void;
-   closeLevelUpModal: ()=> void;
-}
-
-interface ChallengesProviderProps {
-   children: ReactNode;
-   level?: number;
-	currentExperience?: number;
-	challengeCompleted?: number;
-}
-
-export const ChallengesContext = createContext({} as ChallengesContextData);
-
-export function ChallengesProvider({children, ...rest}: ChallengesProviderProps) {
+export function ChallengesProvider({children, ...rest}: iChallengesProviderProps) {
    const [ level, setLevel ] = useState(rest.level ?? 1);
    const [ currentExperience, setCurrentExperience ] = useState(rest.currentExperience ?? 0);
    const [ challengeCompleted, setChallengeCompleted ] = useState(rest.challengeCompleted ?? 0);
@@ -40,6 +18,12 @@ export function ChallengesProvider({children, ...rest}: ChallengesProviderProps)
    const [ isLevelUpModalOpen, setIsLevelUpModalOpen ] = useState(false);
 
    const experienceToNextLevel = Math.pow((level + 1) * 4, 2);
+
+   const user: iUserAuthenticated = {
+      email: rest.user.email,
+      name: rest.user.name,
+      image: rest.user.image
+   }
 
    useEffect(()=>{
       Notification.requestPermission();
@@ -108,7 +92,8 @@ export function ChallengesProvider({children, ...rest}: ChallengesProviderProps)
             resetChallenge,
             experienceToNextLevel,
             completeChallenge,
-            closeLevelUpModal
+            closeLevelUpModal,
+            user
          }}
       >
          {children}
